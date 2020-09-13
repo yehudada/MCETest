@@ -26,9 +26,31 @@ function list_to_tree(list) {
 router.get("/", async (req, res) => {
     let devices = usb.getDeviceList()
     var entries = []
+    var usbDevices = []
     devices.forEach(device => {
+        console.log("device " + device.deviceAddress);
+        var parent = 0
+        if (device.parent != null) {
+            parent = device.parent.deviceAddress
+            console.log("\tParent is " + device.parent.deviceAddress);
+        }
+        usbDevices.push({
+            "id": device.deviceAddress,
+            "children": null,
+            "parentId": parent.toString(10),
+            "vendorId": device.deviceDescriptor.idVendor,
+            "productId": device.deviceDescriptor.idProduct,
+            "name": "VID:" + device.deviceDescriptor.idVendor + " PID:"+device.deviceDescriptor.idProduct
+        })
+        /*
         device.open()
         entries.push(new Promise(resolve => {
+                var parent = 0
+                if (device.parent != null) {
+                    parent = device.parent.deviceAddress
+                    console.log("\tParent is " + device.parent.deviceAddress);
+                }
+            
             device.getStringDescriptor(4, (error, data) => {
                 console.log("device " + device.deviceAddress);
                 var parent = 0
@@ -36,6 +58,9 @@ router.get("/", async (req, res) => {
                     parent = device.parent.deviceAddress
                     console.log("\tParent is " + device.parent.deviceAddress);
                 }
+                usbDevices.push({
+
+                })
 
                 resolve({
                     "id": device.deviceAddress,
@@ -49,18 +74,18 @@ router.get("/", async (req, res) => {
                 console.log("\t" + data);
                 device.close();
             })
+            
         }))
+        */
     })
 
-    let data = {
-        name: 'Parenting',
-        children: [{
-            name: 'Child\n1'
-        }, {
-            name: 'Child Two'
-        }]
-    }
+    let tree = list_to_tree(usbDevices)
+    let result = {"result" : tree}
+    console.log(result);
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(result, null, 3));
 
+/*
     Promise.all(entries).then((values) => {
         let tree = list_to_tree(values)
         let result = {"result" : tree}
@@ -68,7 +93,7 @@ router.get("/", async (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result, null, 3));
     })
-
+*/
     
 
 
