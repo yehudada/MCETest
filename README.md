@@ -19,8 +19,6 @@ Initial quick and dirty (with bug presenting device name)
 
 **If you are running on Windows, you would first need to install a driver https://zadig.akeo.ie/**
 
-[**https://github.com/tessel/node-usb**](https://github.com/tessel/node-usb)
-
 1. **Install nodejs**
 2. **clone the repository (**[**https://github.com/yehudada/MCETest.git**](https://github.com/yehudada/MCETest.git)**)**
 3. **then start server from the directory api (npm start)**
@@ -29,4 +27,6 @@ Initial quick and dirty (with bug presenting device name)
 
 **Reflection**
 
-This was a 2 long days&#39; project built. I learn quickly basic react and nodejs using tutorials to solve the exam , to document the technical debt and write an implementation plan for ready for production app.
+This was a 2 long days&#39; project built. I learn quickly basic react and nodejs using tutorials to solve the exam.
+
+I document the technical debt and write an implementation plan for "ready for production" app.
